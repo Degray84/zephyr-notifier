@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/Degray84/zephyr-notifier/compare/v1.0.0...v1.1.0) (2025-07-28)
+
+
+### Features
+
+* add readme ([336e5eb](https://github.com/Degray84/zephyr-notifier/commit/336e5eba455cd7d7fe91be7167977d852b515091))
+
 # 1.0.0 (2025-07-28)
 
 
