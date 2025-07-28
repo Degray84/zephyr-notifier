@@ -1,4 +1,4 @@
-import { MessageProvider } from "./message-provider.interface";
+import { MessageProvider } from './message-provider.interface';
 
 interface StorageDTO {
   latestMessage?: string;
