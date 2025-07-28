@@ -1,13 +1,13 @@
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
-import { Storage } from "./storage.interface";
-import { StorageError, StorageErrorEnum } from "./errors";
-import { join } from "path";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
+import { Storage } from './storage.interface';
+import { StorageError, StorageErrorEnum } from './errors';
+import { join } from 'path';
 
-const ENCODING: BufferEncoding = "utf-8";
-const STORAGE_DIR = join(process.cwd(), "../", "data");
+const ENCODING: BufferEncoding = 'utf-8';
+const STORAGE_DIR = join(process.cwd(), '../', 'data');
 
 export class FileStorage<
-  D extends Record<string, any> = Record<string, any>
+  D extends Record<string, any> = Record<string, any>,
 > extends Storage<D> {
   private readonly _filePath: string;
 

@@ -1,4 +1,4 @@
-import { ZephyrNotifierError } from "../errors";
+import { ZephyrNotifierError } from '../errors';
 
 export enum StorageErrorEnum {
   Load,
