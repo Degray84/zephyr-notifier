@@ -1,0 +1,27 @@
+{
+  "name": "zephyr-italy-slot-finder-bot",
+  "version": "1.0.2",
+  "description": "Italy slots finder",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "build": "tsc",
+    "dev": "nodemon --watch src --exec ts-node src/index.ts",
+    "docker:publish": "docker buildx build --platform linux/arm64 -t registry.zephyr-home.org/zephyr-notifier:%npm_package_version% -t registry.zephyr-home.org/zephyr-notifier:latest --push ."
+  },
+  "author": "skarmind",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.11.0",
+    "cheerio": "^1.1.2",
+    "cron": "^4.3.2",
+    "dotenv": "^16.6.1",
+    "telegraf": "^4.16.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.1.0",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
