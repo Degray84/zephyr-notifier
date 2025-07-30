@@ -1,3 +1,11 @@
+# [1.2.0](https://github.com/Degray84/zephyr-notifier/compare/v1.1.0...v1.2.0) (2025-07-30)
+
+
+### Features
+
+* add mock server ([cef71dd](https://github.com/Degray84/zephyr-notifier/commit/cef71ddec140765e5f1e24bb7cfffb9deb561901))
+* add pino logger ([e4beaf6](https://github.com/Degray84/zephyr-notifier/commit/e4beaf6f44709cd3e04063cf1261360efb6435a5))
+
 # [1.1.0](https://github.com/Degray84/zephyr-notifier/compare/v1.0.0...v1.1.0) (2025-07-28)
 
 
