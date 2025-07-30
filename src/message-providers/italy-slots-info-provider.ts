@@ -1,10 +1,12 @@
-import { MessageProvider } from './message-provider.interface';
+import { LogMethod } from '../decorators/logger';
+import { BaseMessageProvider } from './base-message-provider';
 
 interface StorageDTO {
   latestMessage?: string;
 }
 
-export class ItalySlotsInfoProvider extends MessageProvider<StorageDTO> {
+export class ItalySlotsInfoProvider extends BaseMessageProvider<StorageDTO> {
+  @LogMethod()
   async getMessage() {
     const [storageData = {}, currentMessage] = await Promise.all([
       this.storage.load(),

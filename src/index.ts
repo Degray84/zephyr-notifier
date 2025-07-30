@@ -8,11 +8,10 @@ const FILE_STORAGE_NAME = 'italy_news';
 
 const scrapper = new ItalyLastSlotScrapper();
 const storage = new FileStorage(FILE_STORAGE_NAME);
+const messageProvider = new ItalySlotsInfoProvider(scrapper, storage);
+const notifier = new TelegramNotifier();
 
-const zephyrNotifier = new ZephyrNotifier(
-  new ItalySlotsInfoProvider(scrapper, storage),
-  new TelegramNotifier(),
-);
+const zephyrNotifier = new ZephyrNotifier(messageProvider, notifier);
 
 zephyrNotifier.start();
 

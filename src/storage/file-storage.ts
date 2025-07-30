@@ -2,18 +2,17 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import { Storage } from './storage.interface';
 import { StorageError, StorageErrorEnum } from './errors';
 import { join } from 'path';
+import { LogMethod } from '../decorators/logger';
 
 const ENCODING: BufferEncoding = 'utf-8';
 const STORAGE_DIR = join(process.cwd(), '../', 'data');
 
-export class FileStorage<
-  D extends Record<string, any> = Record<string, any>,
-> extends Storage<D> {
+export class FileStorage<D extends Record<string, any> = Record<string, any>>
+  implements Storage<D>
+{
   private readonly _filePath: string;
 
   constructor(private readonly _name: string) {
-    super();
-
     this._filePath = join(STORAGE_DIR, `${this._name}.json`);
   }
 
@@ -23,15 +22,20 @@ export class FileStorage<
     }
   }
 
+  @LogMethod()
   async save(data: D) {
     try {
       this.ensureDirExists();
       writeFileSync(this._filePath, JSON.stringify(data, null, 2), ENCODING);
-    } catch (error) {
-      throw new StorageError(StorageErrorEnum.Save, [this._name]);
+    } catch (cause) {
+      throw new StorageError(StorageErrorEnum.Save, {
+        cause,
+        parts: [this._name],
+      });
     }
   }
 
+  @LogMethod()
   async load(): Promise<D> {
     const filePath = this._filePath;
 
@@ -46,8 +50,11 @@ export class FileStorage<
       const data = readFileSync(this._filePath, ENCODING);
 
       return JSON.parse(data);
-    } catch (error) {
-      throw new StorageError(StorageErrorEnum.Load, [this._name]);
+    } catch (cause) {
+      throw new StorageError(StorageErrorEnum.Load, {
+        cause,
+        parts: [this._name],
+      });
     }
   }
 }

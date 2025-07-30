@@ -1,4 +1,4 @@
-import { ZephyrNotifierError } from '../errors';
+import { ZephyrNotifierError, ZephyrNotifierErrorOptions } from '../errors';
 
 export enum ScrapperErrorEnum {
   Default,
@@ -20,7 +20,10 @@ const messages: Record<ScrapperErrorEnum, ErrorMessageFunction> = {
 };
 
 export class ScrapperError extends ZephyrNotifierError {
-  constructor(error: ScrapperErrorEnum, parts?: string[]) {
-    super(messages[error](parts ?? []));
+  constructor(
+    error: ScrapperErrorEnum,
+    { cause, parts }: ZephyrNotifierErrorOptions = {},
+  ) {
+    super(messages[error](parts ?? []), { cause });
   }
 }

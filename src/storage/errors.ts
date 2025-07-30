@@ -1,4 +1,4 @@
-import { ZephyrNotifierError } from '../errors';
+import { ZephyrNotifierError, ZephyrNotifierErrorOptions } from '../errors';
 
 export enum StorageErrorEnum {
   Load,
@@ -14,7 +14,10 @@ const messages: Record<StorageErrorEnum, ErrorMessageFunction> = {
 };
 
 export class StorageError extends ZephyrNotifierError {
-  constructor(error: StorageErrorEnum, parts?: string[]) {
-    super(messages[error](parts ?? []));
+  constructor(
+    error: StorageErrorEnum,
+    { cause, parts }: ZephyrNotifierErrorOptions = {},
+  ) {
+    super(messages[error](parts ?? []), { cause });
   }
 }

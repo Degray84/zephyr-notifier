@@ -1,9 +1,9 @@
-import { Scraper } from '../scrapers/scraper.interface';
+import { BaseScraper } from '../scrapers/base-scraper';
 import { Storage } from '../storage/storage.interface';
 
-export class MessageProvider<D = Record<string, any>> {
+export class BaseMessageProvider<D = Record<string, any>> {
   constructor(
-    protected readonly scrapper: Scraper,
+    protected readonly scrapper: BaseScraper,
     protected readonly storage: Storage<D>,
   ) {}
 

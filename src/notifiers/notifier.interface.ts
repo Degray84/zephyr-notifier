@@ -1,9 +1,4 @@
-export class Notifier {
-  async sendMessage(message: string) {
-    throw new Error('Not implemented');
-  }
-
-  async sendError(message: string) {
-    throw new Error('Not implemented');
-  }
+export interface Notifier {
+  sendMessage(message: string): Promise<void>;
+  sendError(message: string): Promise<void>;
 }

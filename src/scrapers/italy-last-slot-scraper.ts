@@ -1,24 +1,26 @@
 import { SITE_ITALY_URL } from '../config';
+import { LogMethod } from '../decorators/logger';
 import { ScrapperError, ScrapperErrorEnum } from './errors';
-import { Scraper } from './scraper.interface';
+import { BaseScraper } from './base-scraper';
 
 const CONTAINER_CLASS = 'card-visa';
 const HEADER_TEXT = 'RELEASE OF SLOTS';
 
-export class ItalyLastSlotScrapper extends Scraper {
+export class ItalyLastSlotScrapper extends BaseScraper {
   constructor() {
     super(SITE_ITALY_URL);
   }
 
+  @LogMethod()
   public async scrap() {
     try {
       this.$ = await this.parse();
 
       const cardVisa = this.$(`.${CONTAINER_CLASS}`).first();
       if (!cardVisa.length) {
-        throw new ScrapperError(ScrapperErrorEnum.NoElementFound, [
-          CONTAINER_CLASS,
-        ]);
+        throw new ScrapperError(ScrapperErrorEnum.NoElementFound, {
+          parts: [CONTAINER_CLASS],
+        });
       }
 
       const innerDivs = cardVisa.children('div');
@@ -33,9 +35,9 @@ export class ItalyLastSlotScrapper extends Scraper {
       });
 
       if (!startDiv) {
-        throw new ScrapperError(ScrapperErrorEnum.NoElementFound, [
-          HEADER_TEXT,
-        ]);
+        throw new ScrapperError(ScrapperErrorEnum.NoElementFound, {
+          parts: [HEADER_TEXT],
+        });
       }
 
       let resultHtml = this.$!.html(startDiv);
@@ -54,13 +56,13 @@ export class ItalyLastSlotScrapper extends Scraper {
           /(\d{1,3}(?:,\d{3})*|\d+)\s*-\s*(\d{1,3}(?:,\d{3})*|\d+)/g,
           '<b>$&</b>',
         );
-    } catch (error) {
-      if (error instanceof ScrapperError) {
-        throw error;
+    } catch (cause) {
+      if (cause instanceof ScrapperError) {
+        throw cause;
       }
 
-      if (error instanceof Error) {
-        throw new ScrapperError(ScrapperErrorEnum.Default);
+      if (cause instanceof Error) {
+        throw new ScrapperError(ScrapperErrorEnum.Default, { cause });
       }
     }
   }

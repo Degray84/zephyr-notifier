@@ -2,15 +2,17 @@ import axios from 'axios';
 import { CheerioAPI, load } from 'cheerio';
 import { ScrapperError, ScrapperErrorEnum } from './errors';
 
-export class Scraper {
+export class BaseScraper {
   protected $?: CheerioAPI;
 
   constructor(private readonly _url: string) {}
 
   public async parse() {
-    console.log('parse');
-    const { data } = await axios.get(this._url).catch((error) => {
-      throw new ScrapperError(ScrapperErrorEnum.LoadUrl, [this._url]);
+    const { data } = await axios.get(this._url).catch((cause) => {
+      throw new ScrapperError(ScrapperErrorEnum.LoadUrl, {
+        parts: [this._url],
+        cause,
+      });
     });
 
     return load(data);
